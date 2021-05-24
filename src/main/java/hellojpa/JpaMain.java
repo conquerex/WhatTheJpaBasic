@@ -25,22 +25,22 @@ public class JpaMain {
 //            System.out.println(">>>> after");
 
             // 별도의 Select 쿼리 없이 조회
-            Member findMember = em.find(Member.class, 101L);
-            System.out.println("findMember.getId() = " + findMember.getId());
-            System.out.println("findMember.getName() = " + findMember.getName());
-
-            System.out.println(">>>>>>> findMember2 ; select 쿼리 있음 >>>>>>>");
-            Member findMember2 = em.find(Member.class, 2L);
-            System.out.println("findMember.getId() = " + findMember2.getId());
-            System.out.println("findMember.getName() = " + findMember2.getName());
-
-            System.out.println(">>>>>>> findMember3 ; select 쿼리 X >>>>>>>");
-            Member findMember3 = em.find(Member.class, 2L);
-            System.out.println("findMember.getId() = " + findMember3.getId());
-            System.out.println("findMember.getName() = " + findMember3.getName());
-
-            System.out.println(">>>>> findMember2 == findMember3 : ");
-            System.out.println(">>>>> " + (findMember2 == findMember3));
+//            Member findMember = em.find(Member.class, 101L);
+//            System.out.println("findMember.getId() = " + findMember.getId());
+//            System.out.println("findMember.getName() = " + findMember.getName());
+//
+//            System.out.println(">>>>>>> findMember2 ; select 쿼리 있음 >>>>>>>");
+//            Member findMember2 = em.find(Member.class, 2L);
+//            System.out.println("findMember.getId() = " + findMember2.getId());
+//            System.out.println("findMember.getName() = " + findMember2.getName());
+//
+//            System.out.println(">>>>>>> findMember3 ; select 쿼리 X >>>>>>>");
+//            Member findMember3 = em.find(Member.class, 2L);
+//            System.out.println("findMember.getId() = " + findMember3.getId());
+//            System.out.println("findMember.getName() = " + findMember3.getName());
+//
+//            System.out.println(">>>>> findMember2 == findMember3 : ");
+//            System.out.println(">>>>> " + (findMember2 == findMember3));
 
 //            List<Member> result = em.createQuery("select m from Member m", Member.class)
 //                    .setFirstResult(1)
@@ -63,8 +63,26 @@ public class JpaMain {
             /**
              * 엔티티 수정 예시
              */
+//            Member sample = em.find(Member.class, 101L);
+//            sample.setName("qqqq");
+
+
+            /**
+             * Flush 예시
+             */
+//            System.out.println("===== Flush 예시 =====");
+//            Member member = new Member(202L, "sssddd");
+//            em.persist(member);
+//            em.flush();
+//            System.out.println("===== Flush End =====");
+
+            /**
+             * 준영속 예시
+             */
+            System.out.println("==== 준영속 예시 =====");
             Member sample = em.find(Member.class, 101L);
-            sample.setName("qqqq");
+            sample.setName("vvvvv");
+            em.detach(sample);
 
             tx.commit();
         } catch (Exception e) {
