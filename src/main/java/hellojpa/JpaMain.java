@@ -79,10 +79,10 @@ public class JpaMain {
             /**
              * 준영속 예시
              */
-            System.out.println("==== 준영속 예시 =====");
-            Member sample = em.find(Member.class, 101L);
-            sample.setName("vvvvv");
-            em.detach(sample);
+//            System.out.println("==== 준영속 예시 =====");
+//            Member sample = em.find(Member.class, 101L);
+//            sample.setName("vvvvv");
+//            em.detach(sample);
 
             tx.commit();
         } catch (Exception e) {
