@@ -1,9 +1,6 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @SequenceGenerator(name = "member_seq_gengerator", sequenceName = "member_seq")
@@ -24,8 +21,14 @@ public class SampleMember {
 //    @Column(name = "TEAM_ID")
 //    private Long teamId;
 
+    // 다대일 케이스 - 읽기 전용 매핑
+//    @ManyToOne
+//    @JoinColumn(name = "TEAM_ID")
+//    private Team team;
+
+    // 일대다 케이스
     @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
     private Team team;
 
     public Long getId() {
@@ -52,6 +55,7 @@ public class SampleMember {
 //        this.teamId = teamId;
 //    }
 
+/*
     public Team getTeam() {
         return team;
     }
@@ -66,7 +70,7 @@ public class SampleMember {
         // 연관관계 편의 메소드
         team.getMembers().add(this);
     }
-
+*/
 
 
     /*
