@@ -84,6 +84,13 @@ public class JpaMain {
 //            sample.setName("vvvvv");
 //            em.detach(sample);
 
+            /**
+             * 기본키 매핑
+             */
+            Member member = new Member();
+            member.setUsername("sample");
+            em.persist(member);
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
