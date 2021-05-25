@@ -14,11 +14,19 @@ public class SampleMember {
         // 리플렉션등의 이유로 동적으로 처리되어야 해서
     }
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_gengerator")
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "USERNAME")
     private String username;
+
+//    @Column(name = "TEAM_ID")
+//    private Long teamId;
+
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public Long getId() {
         return id;
@@ -35,6 +43,24 @@ public class SampleMember {
     public void setUsername(String username) {
         this.username = username;
     }
+
+//    public Long getTeamId() {
+//        return teamId;
+//    }
+//
+//    public void setTeamId(Long teamId) {
+//        this.teamId = teamId;
+//    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+
 
     /*
     private Integer age;
