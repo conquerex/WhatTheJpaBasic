@@ -7,9 +7,9 @@ import java.util.Date;
 
 @Entity
 @SequenceGenerator(name = "member_seq_gengerator", sequenceName = "member_seq")
-public class Member {
+public class SampleMember {
 
-    public Member() {
+    public SampleMember() {
         // JPA는 기본 생성자가 필요
         // 리플렉션등의 이유로 동적으로 처리되어야 해서
     }
