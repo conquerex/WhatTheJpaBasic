@@ -14,20 +14,20 @@ public class Chapter07Main {
         tx.begin();
 
         try {
-            Movie movie = new Movie();
-            movie.setDirector("aaaa");
-            movie.setActor("dddd");
-            movie.setName("NNNName");
-            movie.setPrice(2000);
-            em.persist(movie);
+            SampleMovie sampleMovie = new SampleMovie();
+            sampleMovie.setDirector("aaaa");
+            sampleMovie.setActor("dddd");
+            sampleMovie.setName("NNNName");
+            sampleMovie.setPrice(2000);
+            em.persist(sampleMovie);
 
             em.flush();
             em.clear();
 
-            Movie movie1 = em.find(Movie.class, movie.getId());
-            System.out.println("movie1 = " + movie1);
-            System.out.println("movie1 = " + movie1.getName());
-            System.out.println("movie1 = " + movie1.getActor());
+            SampleMovie sampleMovie1 = em.find(SampleMovie.class, sampleMovie.getId());
+            System.out.println("movie1 = " + sampleMovie1);
+            System.out.println("movie1 = " + sampleMovie1.getName());
+            System.out.println("movie1 = " + sampleMovie1.getActor());
 
             SampleMember member = new SampleMember();
             member.setUsername("NNNNameee");

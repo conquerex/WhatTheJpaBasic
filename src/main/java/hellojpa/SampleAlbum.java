@@ -3,6 +3,6 @@ package hellojpa;
 import javax.persistence.Entity;
 
 @Entity
-public class Album extends SampleItem {
+public class SampleAlbum extends SampleItem {
     private String artist;
 }

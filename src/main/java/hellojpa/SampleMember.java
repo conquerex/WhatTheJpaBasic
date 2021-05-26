@@ -1,13 +1,12 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @SequenceGenerator(name = "member_seq_gengerator", sequenceName = "member_seq")
-public class SampleMember extends BaseEntity {
+public class SampleMember extends SampleBaseEntity {
 
     public SampleMember() {
         // JPA는 기본 생성자가 필요
