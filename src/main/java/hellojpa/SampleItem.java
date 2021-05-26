@@ -3,9 +3,10 @@ package hellojpa;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn
-public class SampleItem {
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DiscriminatorColumn // SINGLE_TABLE에서는 Default
+public abstract class SampleItem {
     @Id
     @GeneratedValue
     private Long id;

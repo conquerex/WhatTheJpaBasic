@@ -1,12 +1,13 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @SequenceGenerator(name = "member_seq_gengerator", sequenceName = "member_seq")
-public class SampleMember {
+public class SampleMember extends BaseEntity {
 
     public SampleMember() {
         // JPA는 기본 생성자가 필요
@@ -43,6 +44,10 @@ public class SampleMember {
     @OneToMany(mappedBy = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();
 
+
+    /**
+     * Getter / Setter
+     */
 
     public Long getId() {
         return id;
