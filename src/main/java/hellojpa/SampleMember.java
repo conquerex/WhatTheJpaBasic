@@ -29,8 +29,9 @@ public class SampleMember extends SampleBaseEntity {
 //    private Team team;
 
     // 일대다 케이스
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn // (name = "TEAM_ID", insertable = false, updatable = false)
     private Team team;
 
     @OneToOne
@@ -62,6 +63,14 @@ public class SampleMember extends SampleBaseEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
 //    public Long getTeamId() {
