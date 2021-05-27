@@ -102,6 +102,32 @@ public class Chapter08Main {
             List<SampleMember> memberList = em.createQuery("select m from SampleMember m join fetch m.team", SampleMember.class)
                     .getResultList();
 
+            /**
+             * 영속성 전이
+             */
+            System.out.println("\n\n\n==========  영속성 전이  ===========\n");
+            Child child1 = new Child();
+            Child child2 = new Child();
+
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            // CascadeType.ALL : 아래 child 주석 처리
+//            em.persist(child1);
+//            em.persist(child2);
+            em.persist(parent);
+
+            em.flush();
+            em.clear();
+
+            Parent parent1 = em.find(Parent.class, parent.getId());
+            System.out.println("childList size :::: " + parent1.getChildList().size());
+            em.remove(parent1);
+//            parent1.getChildList().remove(0);
+//            parent1.getChildList().remove(1);
+
+
 
             tx.commit();
         } catch (Exception e) {
