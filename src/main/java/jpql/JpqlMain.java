@@ -17,16 +17,23 @@ public class JpqlMain {
             Team teamB = new Team("bbb");
             em.persist(teamB);
 
-            for (int i = 0; i < 100; i++) {
+            Member sampleMember = new Member();
+
+            for (int i = 0; i < 99; i++) {
                 Member member = new Member();
                 member.setAge((int) (Math.random() * 10000));
 
+                if (i == 4) {
+                    sampleMember = member;
+                    em.persist(sampleMember);
+                }
+
                 if (i > 50) member.setUsername("aaa");
-                else if (i % 3 == 1) member.setUsername(null);
+//                else if (i % 3 == 1) member.setUsername(null);
                 else member.setUsername("My name " + i);
 
-                if (i % 2 == 0) member.setTeam(teamA);
-                else member.setTeam(teamB);
+                if (i % 5 < 2) member.setTeam(teamA);
+                else if (i % 5 > 2) member.setTeam(teamB);
 
                 if (i % 3 == 0) member.setType(MemberType.ADMIN);
 
@@ -147,11 +154,58 @@ public class JpqlMain {
 //            }
 
 //            String queryString7 = "select function('group_concat', m.username) from J_MEMBER m ";
-            String queryString7 = "select group_concat(m.username) from J_MEMBER m ";
-            List<String> resultList7 = em.createQuery(queryString7, String.class).getResultList();
-            for (String s : resultList7) {
-                System.out.println("s = " + s);
+//            String queryString7 = "select group_concat(m.username) from J_MEMBER m ";
+//            List<String> resultList7 = em.createQuery(queryString7, String.class).getResultList();
+//            for (String s : resultList7) {
+//                System.out.println("s = " + s);
+//            }
+
+            /**
+             * 경로 표현식
+             */
+            // 묵시적 내부 조인 발생, 권장하지 않음
+//            String queryString7 = "select m.team from J_MEMBER m where m.id < 5";
+//            List<Team> resultList7 = em.createQuery(queryString7, Team.class).getResultList();
+//            for (Team s : resultList7) {
+//                System.out.println("s = " + s);
+//            }
+
+            /**
+             * 페치 조인 1 - 기본
+             */
+            System.out.println("\n\n===========  페치 조인 1 - 기본  ==============");
+//            String queryString7 = "select m from J_MEMBER m join fetch m.team where m.id < 20 ";
+//            List<Member> resultList7 = em.createQuery(queryString7, Member.class).getResultList();
+//            for (Member member : resultList7) {
+//                System.out.println("* member.getUsername() = " + member.getUsername());
+//                System.out.println("* >>>>>  getName() = " + member.getTeam().getName());
+//            }
+
+//            String queryString7 = "select distinct t from J_TEAM t join fetch t.members";
+//            List<Team> resultList7 = em.createQuery(queryString7, Team.class).getResultList();
+//            for (Team team : resultList7) {
+//                System.out.println("* member.name = " + team.getName());
+//                System.out.println("* >>>>>  size = " + team.getMembers().size());
+//            }
+
+            /**
+             * 다형성 쿼리
+             * select i from item i where type(i) in (Book, Movie)
+             * select i from item treat(i as Book).author = 'kim'
+             */
+
+
+            /**
+             * 엔티티 직접 사용
+             */
+            String queryString7 = "select m from J_MEMBER m where m = :member";
+            List<Member> resultList7 = em.createQuery(queryString7, Member.class)
+                    .setParameter("member", sampleMember)
+                    .getResultList();
+            for (Member member : resultList7) {
+                System.out.println("* member.name = " + member.getUsername());
             }
+
 
 
             tx.commit();
