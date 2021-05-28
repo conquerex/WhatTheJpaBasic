@@ -6,6 +6,15 @@ import java.util.List;
 
 @Entity(name = "J_TEAM")
 public class Team {
+
+    public Team(String name) {
+        this.name = name;
+    }
+
+    public Team() {
+
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "TEAM_ID")
