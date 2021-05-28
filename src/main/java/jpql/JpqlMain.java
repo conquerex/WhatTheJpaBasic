@@ -11,14 +11,25 @@ public class JpqlMain {
         tx.begin();
 
         try {
-            Team team = new Team("team name");
-            em.persist(team);
+            Team teamA = new Team("aaa");
+            em.persist(teamA);
+
+            Team teamB = new Team("bbb");
+            em.persist(teamB);
 
             for (int i = 0; i < 100; i++) {
                 Member member = new Member();
-                member.setUsername("My name " + i);
                 member.setAge((int) (Math.random() * 10000));
-                member.setTeam(team);
+
+                if (i > 50) member.setUsername("aaa");
+                else member.setUsername("My name " + i);
+
+                if (i % 2 == 0) member.setTeam(teamA);
+                else member.setTeam(teamB);
+
+                if (i % 3 == 0) member.setType(MemberType.ADMIN);
+                else member.setType(MemberType.USER);
+
                 em.persist(member);
             }
 
@@ -37,6 +48,9 @@ public class JpqlMain {
             }
 */
 
+            /**
+             * 프로젝션
+             */
             System.out.println("=============  프로젝션  =============");
             em.createQuery("select m.team from J_MEMBER m", Team.class).getResultList();
             em.createQuery("select t from J_MEMBER m join m.team t", Team.class).getResultList();
@@ -61,6 +75,30 @@ public class JpqlMain {
 
             for (Member member : resultList3) {
                 System.out.println("member.toString() = " + member.toString());
+            }
+
+            /**
+             * 조인
+             */
+            em.flush();
+            em.clear();
+//            String queryString = "select m from J_MEMBER m left join m.team t";
+//            String queryString = "select m from J_MEMBER m, J_TEAM t where m.username = t.name";
+            String queryString = "select m from J_MEMBER m left join J_TEAM t on m.username = t.name";
+            em.createQuery(queryString, Member.class).getResultList();
+
+            /**
+             * JPQL 타입 표현과 기타식
+             */
+            String queryString2 = "select m.username, 'SAMPLE', TRUE from J_MEMBER m " +
+                    "where m.type = :userType"; // "where m.type = jpql.MemberType.ADMIN"
+            List<Object[]> resultList = em.createQuery(queryString2)
+                    .setParameter("userType", MemberType.ADMIN)
+                    .getResultList();
+            for (Object[] objects : resultList) {
+                System.out.println("objects = " + objects[0]);
+                System.out.println("objects = " + objects[1]);
+                System.out.println("objects = " + objects[2]);
             }
 
             tx.commit();
