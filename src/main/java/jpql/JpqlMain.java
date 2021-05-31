@@ -206,6 +206,44 @@ public class JpqlMain {
                 System.out.println("* member.name = " + member.getUsername());
             }
 
+            /**
+             * Named 쿼리
+             */
+            List<Member> username = em.createNamedQuery("Member.findByUsername", Member.class)
+                    .setParameter("username", "My name 12")
+                    .getResultList();
+            for (Member member : username) {
+                System.out.println(">>>> member.getId() = " + member.getId());
+            }
+
+            /**
+             * 별크 연산
+             */
+            // executeUpdate 전, Flush 자동으로 수행
+            List<Member> userList = em.createQuery("select m from J_MEMBER m " +
+                    "where m.id < 5 " +
+                    "order by m.id ", Member.class)
+                    .getResultList();
+            int count = em.createQuery("update J_MEMBER m set m.age = 2000")
+                    .executeUpdate();
+            System.out.println(">>>> update count = " + count);
+
+            // 영속성 컨텍스트에는 반영되기 전
+            for (Member member : userList) {
+                System.out.println("member.getId = " + member.getId());
+                System.out.println("member.getAge = " + member.getAge());
+            }
+
+            // 벌크 연산 수행 후 영속성 컨텍스트 초기화
+            em.clear();
+
+            // 영속성 컨텍스트에는 반영됨
+            for (Member member : userList) {
+                Member mem = em.find(Member.class, member.getId());
+                System.out.println("mem.getId = " + mem.getId());
+                System.out.println("mem.getAge = " + mem.getAge());
+            }
+
 
 
             tx.commit();
